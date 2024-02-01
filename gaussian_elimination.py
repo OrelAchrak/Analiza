@@ -117,7 +117,7 @@ if __name__ == '__main__':
                [-2, 3, -4, 5, 6, -7, -5],
                [3, -4, 5, -6, 7, -8, 15]]
 
-    if int(choise) <= 4:
+    if int(choise) <= 4 :
         result = gaussianElimination(A_b)
         if isinstance(result, str):
             print(result)
