@@ -121,7 +121,12 @@ if __name__ == '__main__':
         A_b = [[0.913 , 0.659 , 0.254],
                 [0.457, 0.330, 0.127]]
 
-    if int(choice) <= 5:
+    elif choice == "6":
+        A_b = [[0, 1, -1, -1],
+              [3, -1, 1, 4],
+              [1, 1, -2, -3]]
+
+    if int(choice) <= 6:
         result = gaussianElimination(A_b)
         if isinstance(result, str):
             print(result)
