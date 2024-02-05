@@ -90,26 +90,26 @@ def calculating_results(mat):
 
 if __name__ == '__main__':
 
-    choise = input("Enter choise:")
-    if choise == "1":
+    choice = input("Enter choose:")
+    if choice == "1":
         A_b = [[1, -1, 2, -1, -8],
                [2, -2, 3, -3, -20],
                [1, 1, 1, 0, -2],
                [1, -1, 4, 3, 4]]
 
-    elif choise == "2":
+    elif choice == "2":
         A_b = [[1, 2, 3, 4, 5],
                [6, 8, 10, 50, 37],
                [18, 12, 16, 14, 15],
                [16, 29, 18, 32, 20]]
 
-    elif choise == "3":
+    elif choice == "3":
         A_b = [[0, 0, 0, 1, 1],
                [1, 0, 0, 0, 1],
                [0, 1, 0, 0, 1],
                [0, 0, 1, 0, 1]]
 
-    elif choise == "4":
+    elif choice == "4":
         A_b = [[2, -3, 4, 5, -6, 7, 20],
                [-3, 6, -5, 8, 2, -4, -15],
                [4, -5, 7, -9, 10, -8, 30],
@@ -117,7 +117,11 @@ if __name__ == '__main__':
                [-2, 3, -4, 5, 6, -7, -5],
                [3, -4, 5, -6, 7, -8, 15]]
 
-    if int(choise) <= 4:
+    elif choice == "5":
+        A_b = [[0.913 , 0.659 , 0.254],
+                [0.457, 0.330, 0.127]]
+
+    if int(choice) <= 5:
         result = gaussianElimination(A_b)
         if isinstance(result, str):
             print(result)
