@@ -1,5 +1,5 @@
-Hi!
-I have managed to fix the solusion and the elimination of the bottom matrix...
-if you guys could try to write the func that eliminate the upper matrix that will be great!
-
-Good luck! 
+Numeric Analysis
+1. Yehuda Baza - 
+2. Orel Achrak - 
+3. Haim Armias - 
+4. Rahamim Tadela - 208189621
