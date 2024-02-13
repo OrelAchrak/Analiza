@@ -23,13 +23,14 @@ def gaussianElimination(mat):
 def swap_row(mat, i, j):
     mat[i], mat[j] = mat[j], mat[i]
 
-    '''
-    N = len(mat)
-    for k in range(N):
-        temp = mat[i][k]
-        mat[i][k] = mat[j][k]
-        mat[j][k] = temp
-    '''
+def print_J_matrix(matSize, i , j, m):
+    size = int(matSize)
+    J = np.identity(size)
+    if (i or j) >= size:
+        return
+    J[i][j] = m
+    print(J)
+
 
 
 def forward_substitution(mat):
@@ -41,7 +42,7 @@ def forward_substitution(mat):
         v_max = mat[pivot_row][k]
         for i in range(k + 1, N):
             if abs(mat[i][k]) > v_max:
-                v_max = mat[i][k]
+                v_max = abs(mat[i][k])
                 pivot_row = i
 
         # if a principal diagonal element is zero,it denotes that matrix is singular,
@@ -65,6 +66,7 @@ def forward_substitution(mat):
 
             # filling lower triangular matrix with zeros
             mat[i][k] = 0
+
 
     return -1
 
@@ -105,7 +107,7 @@ if __name__ == '__main__':
 
     elif choice == "3":
         A_b = [[0, 0, 0, 1, 1],
-               [1, 0, 0, 0, 1],
+               [-1, 0, 0, 0, 1],
                [0, 1, 0, 0, 1],
                [0, 0, 1, 0, 1]]
 
