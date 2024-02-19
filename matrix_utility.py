@@ -123,3 +123,9 @@ def partial_pivoting(A,i,N):
         print(f"The matrix after elementary operation :\n {A}")
         print("------------------------------------------------------------------")
 
+def print_matrix(matrix):
+    for row in matrix:
+        for element in row:
+            print(element, end=" ")  # Print each element in the row
+        print()  # Move to the next row
+    print()
