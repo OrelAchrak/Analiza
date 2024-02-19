@@ -103,7 +103,6 @@ if __name__ == '__main__':
                   [1, 4, 6]])
     B = []  # Initialize B as an empty list
     try:
-        print(np.linalg.inv(A))
         A_inverse, B = inverse(A, B)
         print(bcolors.OKBLUE, "\nInverse of matrix A: \n", A_inverse)
         print(
@@ -119,4 +118,4 @@ if __name__ == '__main__':
         print(elem_matrix)
         i += 1
     print("+++++")
-    print(np.dot(B[0], B[7]))
+    print(np.dot(B[0], B[7])) #print the matrix multiply that you want
