@@ -23,14 +23,14 @@ def gaussianElimination(mat):
 def swap_row(mat, i, j):
     mat[i], mat[j] = mat[j], mat[i]
 
-def print_J_matrix(matSize, i , j, m):
+
+def print_J_matrix(matSize, i, j, m):
     size = int(matSize)
     J = np.identity(size)
     if (i or j) >= size:
         return
     J[i][j] = m
     print(J)
-
 
 
 def forward_substitution(mat):
@@ -66,7 +66,6 @@ def forward_substitution(mat):
 
             # filling lower triangular matrix with zeros
             mat[i][k] = 0
-
 
     return -1
 
@@ -120,15 +119,21 @@ if __name__ == '__main__':
                [3, -4, 5, -6, 7, -8, 15]]
 
     elif choice == "5":
-        A_b = [[0.913 , 0.659 , 0.254],
-                [0.457, 0.330, 0.127]]
+        A_b = [[0.913, 0.659, 0.254],
+               [0.457, 0.330, 0.127]]
 
     elif choice == "6":
         A_b = [[0, 1, -1, -1],
-              [3, -1, 1, 4],
-              [1, 1, -2, -3]]
+               [3, -1, 1, 4],
+               [1, 1, -2, -3]]
 
-    if int(choice) <= 6:
+    elif choice == "7":
+        A_b = [[1, 2, 3, 4, 5],
+               [2, 3, 4, 5, 1],
+               [8, 8, 8, 8, 1],
+               [24, 15, 22, 1, 8]]
+
+    if int(choice) <= 7:
         result = gaussianElimination(A_b)
         if isinstance(result, str):
             print(result)
