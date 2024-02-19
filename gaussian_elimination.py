@@ -1,6 +1,5 @@
 import numpy as np
-
-from numpy.linalg import norm, inv
+from colors import bcolors
 
 
 def gaussianElimination(mat):
@@ -9,8 +8,7 @@ def gaussianElimination(mat):
     singular_flag = forward_substitution(mat)
 
     if singular_flag != -1:
-
-        if mat[singular_flag][N]:
+        if abs(mat[singular_flag][N]) < 1e-10:  # Check for singularity with a small threshold
             return "Singular Matrix (Inconsistent System)"
         else:
             return "Singular Matrix (May have infinitely many solutions)"
@@ -24,40 +22,28 @@ def swap_row(mat, i, j):
     mat[i], mat[j] = mat[j], mat[i]
 
 
-def print_J_matrix(matSize, i, j, m):
-    size = int(matSize)
-    J = np.identity(size)
-    if (i or j) >= size:
-        return
-    J[i][j] = m
-    print(J)
-
-
 def forward_substitution(mat):
     N = len(mat)
     for k in range(N):
-
         # Partial Pivoting: Find the pivot row with the largest absolute value in the current column
         pivot_row = k
-        v_max = mat[pivot_row][k]
+        v_max = abs(mat[pivot_row][k])
         for i in range(k + 1, N):
             if abs(mat[i][k]) > v_max:
                 v_max = abs(mat[i][k])
                 pivot_row = i
 
-        # if a principal diagonal element is zero,it denotes that matrix is singular,
+        # if a principal diagonal element is zero, it denotes that matrix is singular,
         # and will lead to a division-by-zero later.
-        if not mat[pivot_row][k]:
+        if abs(mat[pivot_row][k]) < 1e-10:  # Check for singularity with a small threshold
             return k  # Matrix is singular
 
         # Swap the current row with the pivot row
         if pivot_row != k:
             swap_row(mat, k, pivot_row)
-        # End Partial Pivoting
 
         for i in range(k + 1, N):
-
-            #  Compute the multiplier
+            # Compute the multiplier
             m = mat[i][k] / mat[k][k]
 
             # subtract fth multiple of corresponding kth row element
@@ -70,76 +56,53 @@ def forward_substitution(mat):
     return -1
 
 
+def identity_matrix_with_solution(A_b, x):
+    A_b = np.zeros((len(A_b), len(A_b) + 1))
+    np.fill_diagonal(A_b, 1)
+    for i in range(len(A_b)):
+        A_b[i][-1] = x[i]
+    return A_b
+
+
 # function to calculate the values of the unknowns
-def calculating_results(mat):
-    N = len(mat)
-    x = np.zeros(N)  # An array to store solution
+def calculating_results(A_b):
+    N = len(A_b)
+    x = np.zeros(N)
 
-    # Start calculating from last equation up to the first
+    # Calculate the values of the unknowns
     for i in range(N - 1, -1, -1):
-
-        x[i] = mat[i][N]
-
-        # Initialize j to i+1 since matrix is upper triangular
+        x[i] = A_b[i][-1]
         for j in range(i + 1, N):
-            x[i] -= mat[i][j] * x[j]
+            x[i] -= A_b[i][j] * x[j]
+        x[i] = x[i] / A_b[i][i]
 
-        x[i] = (x[i] / mat[i][i])
-
-    return x
+    return identity_matrix_with_solution(A_b, x)
 
 
 if __name__ == '__main__':
+    try:
+        num_equations = int(input("Enter the number of equations: "))
+        num_unknowns = int(input("Enter the number of unknowns: "))
+        A_b = []
 
-    choice = input("Enter choose:")
-    if choice == "1":
-        A_b = [[1, -1, 2, -1, -8],
-               [2, -2, 3, -3, -20],
-               [1, 1, 1, 0, -2],
-               [1, -1, 4, 3, 4]]
+        print(f"Enter the augmented matrix [{num_equations}x{num_unknowns + 1}]:")
+        for i in range(num_equations):
+            row_values = list(map(float, input(f"Enter values for equation {i + 1}: ").split()))
+            if len(row_values) != num_unknowns + 1:
+                raise ValueError("Invalid row length. Please enter values for each column.")
+            A_b.append(row_values)
 
-    elif choice == "2":
-        A_b = [[1, 2, 3, 4, 5],
-               [6, 8, 10, 50, 37],
-               [18, 12, 16, 14, 15],
-               [16, 29, 18, 32, 20]]
-
-    elif choice == "3":
-        A_b = [[0, 0, 0, 1, 1],
-               [-1, 0, 0, 0, 1],
-               [0, 1, 0, 0, 1],
-               [0, 0, 1, 0, 1]]
-
-    elif choice == "4":
-        A_b = [[2, -3, 4, 5, -6, 7, 20],
-               [-3, 6, -5, 8, 2, -4, -15],
-               [4, -5, 7, -9, 10, -8, 30],
-               [1, 2, -3, 4, -5, 6, 10],
-               [-2, 3, -4, 5, 6, -7, -5],
-               [3, -4, 5, -6, 7, -8, 15]]
-
-    elif choice == "5":
-        A_b = [[0.913, 0.659, 0.254],
-               [0.457, 0.330, 0.127]]
-
-    elif choice == "6":
-        A_b = [[0, 1, -1, -1],
-               [3, -1, 1, 4],
-               [1, 1, -2, -3]]
-
-    elif choice == "7":
-        A_b = [[1, 2, 3, 4, 5],
-               [2, 3, 4, 5, 1],
-               [8, 8, 8, 8, 1],
-               [24, 15, 22, 1, 8]]
-
-    if int(choice) <= 7:
         result = gaussianElimination(A_b)
         if isinstance(result, str):
             print(result)
         else:
-            print("\nSolution for the system:")
-            for x in result:
-                print("{:.6f}".format(x))
+            print("\nSolution for the system: ")
+            for i, value in enumerate(result):
+                print(f"Solution for unknown {i + 1}: {value[-1]:.6f}")
+        print("---------------------------------------------------------------------------")
+        print("The solution matrix is: ")
         for i in range(len(A_b)):
-            print(A_b[i])
+            print(result[i])
+
+    except ValueError as e:
+        print(f"Error: {e}")
