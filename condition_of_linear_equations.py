@@ -43,15 +43,21 @@ def condition_number(A):
 
 
 if __name__ == '__main__':
-    A = np.array([[1, 1/2, 1/3],
-                  [1/2, 1/3 , 1/4],
-                  [1/3, 1/4, 1.5]])
+    size = 3  # You can change the size as needed
+    print("Enter the elements of the matrix (each row on a new line):")
+    A = []
+    for i in range(size):
+        row = list(map(float, input().split()))
+        A.append(row)
+    A = np.array(A)
     B=[]
     B= get_elemetarys(A)
 
+    print("the last 3 elmentary of Matrix A: ")
     for mat in B[-3:]:
         print(mat)
         print("-------")
+    print("the norm is: ")
     print(norm(A))
 
 
@@ -61,7 +67,6 @@ if __name__ == '__main__':
         "Group: Haim Armias - 315569061, Yehuda Baza - 208029819, Rahamim Tadela - 208189621, Orel Achrak - 318554532")
     print("Git: https://github.com/OrelAchrak/Analiza/tree/master")
     print("Name: ")
-
 
 
 
