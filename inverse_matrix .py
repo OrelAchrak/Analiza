@@ -1,7 +1,45 @@
 import numpy as np
-
 from colors import bcolors
 
+def get_elemetarys(matrix):
+    elem_mat = []
+    if matrix.shape[0] != matrix.shape[1]:
+        raise ValueError("Input matrix must be square.")
+
+    n = matrix.shape[0]
+    identity = np.identity(n)
+
+    # Perform row operations to transform the input matrix into the identity matrix
+    for i in range(n):
+        if matrix[i, i] == 0:
+            if i < n:
+                if matrix[i, i + 1] != 0 and matrix[i + 1, i] != 0:
+                    matrix = swap_row(matrix, i, i + 1)
+                    identity = swap_row(identity, i, i + 1)
+                if matrix[i + 1, i + 1] == 0:
+                    raise ValueError("Matrix is singular, cannot find its inverse.")
+
+        if matrix[i, i] != 1:
+            # Scale the current row to make the diagonal element 1
+            scalar = 1.0 / matrix[i, i]
+            elementary_matrix = scalar_multiplication_elementary_matrix(n, i, scalar)
+            elem_mat.append(elementary_matrix)  # Append the elementary matrix to B
+            matrix = np.dot(elementary_matrix, matrix)
+            identity = np.dot(elementary_matrix, identity)
+
+        # Zero out the elements above and below the diagonal
+        for j in range(n):
+            if i != j:
+                scalar = -matrix[j, i]
+                elementary_matrix = row_addition_elementary_matrix(n, j, i, scalar)
+                elem_mat.append(elementary_matrix)  # Append the elementary matrix to B
+                matrix = np.dot(elementary_matrix, matrix)
+                identity = np.dot(elementary_matrix, identity)
+
+    # Round the elements of the identity matrix
+    identity = np.round(identity, decimals=7)
+
+    return elem_mat
 
 def row_addition_elementary_matrix(n, target_row, source_row, scalar=1.0):
     if target_row < 0 or source_row < 0 or target_row >= n or source_row >= n:
