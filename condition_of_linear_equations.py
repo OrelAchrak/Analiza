@@ -1,7 +1,7 @@
 import numpy as np
-from inverse_matrix import inverse
 from colors import bcolors
 from matrix_utility import print_matrix
+from inverse_matrix import get_elemetarys
 
 
 def norm(mat):
@@ -21,7 +21,7 @@ def condition_number(A):
     norm_A = norm(A)
 
     # Step 2: Calculate the inverse of A
-    A_inv = inverse(A)
+    A_inv = np.linalg.inv(A)
 
     # Step 3: Calculate the max norm of the inverse of A
     norm_A_inv = norm(A_inv)
@@ -43,13 +43,24 @@ def condition_number(A):
 
 
 if __name__ == '__main__':
-    A = np.array([[2, 1.7, -2.5],
-                  [1.24, -2, -0.5],
-                  [3, 0.2, 1]])
-    cond = condition_number(A)
+    A = np.array([[1, 1/2, 1/3],
+                  [1/2, 1/3 , 1/4],
+                  [1/3, 1/4, 1.5]])
+    B=[]
+    B= get_elemetarys(A)
 
-    print(bcolors.OKGREEN, "\n condition number: ", cond, bcolors.ENDC)
+    for mat in B[-3:]:
+        print(mat)
+        print("-------")
+    print(norm(A))
 
+
+    print("-----------------------------")
+    print("Date: 19/02/24")
+    print(
+        "Group: Haim Armias - 315569061, Yehuda Baza - 208029819, Rahamim Tadela - 208189621, Orel Achrak - 318554532")
+    print("Git: https://github.com/OrelAchrak/Analiza/tree/master")
+    print("Name: ")
 
 
 
