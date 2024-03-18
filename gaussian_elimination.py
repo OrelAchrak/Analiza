@@ -90,20 +90,20 @@ def calculating_results(mat):
 
 
 if __name__ == '__main__':
-    print("Date: 19/02/24")
+    print("Date: 18/03/24")
     print(
         "Group: Haim Armias - 315569061, Yehuda Baza - 208029819, Rahamim Tadela - 208189621, Orel Achrak - 318554532")
-    print("https://github.com/OrelAchrak/Analiza/tree/master")
+    print("https://github.com/OrelAchrak/Analiza/tree/orel")
     print("Name: Orel Achrak - 318554532")
 
     choice = input("Enter choose:")
-    if choice == "1":
+    if choice == "2":
         A_b = [[1, -1, 2, -1, -8],
                [2, -2, 3, -3, -20],
                [1, 1, 1, 0, -2],
                [1, -1, 4, 3, 4]]
 
-    elif choice == "2":
+    elif choice == "9":
         A_b = [[1, 2, 3, 4, 5],
                [6, 8, 10, 50, 37],
                [18, 12, 16, 14, 15],
@@ -143,7 +143,14 @@ if __name__ == '__main__':
               [3, -1, 0, 1],
               [1, 4, -2, -5]]
 
-    if int(choice) <= 8:
+    elif choice == "1":
+        A_b = [[2, 3, 4, 5, 6, 92],
+               [-5, 3, 4, -2, 3, 22],
+               [4, -5, -2, 2, 6, 42],
+               [4, 5, -1, -2, -3, -22],
+               [5, 5, 3, -3, 5, 41]]
+
+    if int(choice) <= 9:
         print(A_b)
         result = gaussianElimination(A_b)
         if isinstance(result, str):
