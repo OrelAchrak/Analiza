@@ -1,4 +1,6 @@
 import math
+
+import numpy as np
 import sympy as sp
 
 x = sp.symbols('x')
@@ -35,6 +37,10 @@ def simpsons_rule(f, a, b, n):
 
     return integral
 
+
+def f(x):
+    return (2*x**2 + sp.cos(2*math.e**(-2*x))) / (2*x**3 + x**2 - 6)
+
 def calculate_error(f, a, b, n):
     h = (b - a) / n
     x_values = [a + i * h for i in range(n+1)]
@@ -43,13 +49,14 @@ def calculate_error(f, a, b, n):
     return error
 
 if __name__ == '__main__':
-    f = lambda x: math.e ** (x ** 2)
-    n = 4
-    a = 0
-    b = 1
+    n = 10
+    a = -0.6
+    b = -0.5
+
 
     print(f" Division into n={n} sections ")
     integral = simpsons_rule(f, a, b, n)
+    if integral < 0:
+        integral = abs(integral)
     error = calculate_error(f, a, b, n)
-    print(f"Numerical Integration of definite integral in range [{a},{b}] is {integral}")
-    print(f"Error is {error}")
+    print(f"Numerical Integration of definite integral in range [{a},{b}] is {integral:.5f}")

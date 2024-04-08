@@ -1,8 +1,11 @@
 import numpy as np
+import sympy as sp
+import math
 from colors import bcolors
 """
 Correct!
 """
+x = sp.symbols('x')
 
 def romberg_integration(func, a, b, max_iterations=10, tol=1e-6):
     """
@@ -56,16 +59,18 @@ def romberg_integration2(f, a, b, n):
 
 
 def f(x):
-    return 1/(2+x ** 4)
+    return (2*x**2 + sp.cos(2*math.e**(-2*x))) / (2*x**3 + x**2 - 6)
 
 
 if __name__ == '__main__':
 
-    a = 40
-    b = 100
-    n = 6
+    a = -0.6
+    b = -0.5
+    n = 2
     integral = romberg_integration2(f, a, b, n)
+    if integral < 0:
+        integral = abs(integral)
 
     print( f" Division into n={n} sections ")
-    print(bcolors.OKBLUE, f"Approximate integral in range [{a},{b}] is {integral}", bcolors.ENDC)
+    print(bcolors.OKBLUE, f"Approximate integral in range [{a},{b}] is {integral:.5f}", bcolors.ENDC)
 
